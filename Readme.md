@@ -1,6 +1,6 @@
 # DNN Extension URL Providers
 
-The DNN Extension Url Providers project contains installable extensions for extending DNN URL functionality.
+Clone from: https://archive.codeplex.com/?p=dnnurlproviders
 
 DNN Extension URL Providers are DNN Extensions that modify URL behaviour for specific DNN Extensions.
 
