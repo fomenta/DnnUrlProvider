@@ -1,0 +1,77 @@
+﻿/************************************************************/
+/*****              SQLDataProvider		                *****/
+/*****			DNN Url Redirect Provider 1.00.00		*****/
+/*****                                                  *****/
+/***** Note: To manually execute this script you must   *****/
+/*****       perform a search and replace operation     *****/
+/*****       for  and {objectQualifier}	*****/
+/************************************************************/
+
+/****** Object:  Table {databaseOwner}[{objectQualifier}urp_Redirect]    Script Date: 09/27/2012 20:50:34 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}urp_Redirect]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}urp_Redirect](
+	[RedirectId] [uniqueidentifier] NOT NULL CONSTRAINT [DF_{objectQualifier}urp_Redirect_RedirectId]  DEFAULT (newid()),
+	[PortalId] [int] NOT NULL,
+	[RedirectOrder] [int] NOT NULL,
+	[HttpAlias] [nvarchar](200) NULL,
+	[RedirectUrl] [nvarchar](512) NOT NULL,
+	[MatchType] [nvarchar](20) NOT NULL,
+	[KeepQueryString] [bit] NOT NULL,
+	[DestTabPath] [nchar](255) NULL,
+	[DestTabId] [int] NULL,
+	[DestUrl] [nvarchar](255) NULL,
+	[DestType] [nvarchar](20) NULL,
+	[IsRegex] [bit] NULL,
+ CONSTRAINT [PK_{objectQualifier}urp_Redirect] PRIMARY KEY CLUSTERED 
+(
+	[RedirectId] ASC
+)
+) 
+END
+GO
+/****** Object:  StoredProcedure {databaseOwner}[{objectQualifier}urp_GetRedirectsForPortal]    Script Date: 09/27/2012 20:50:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}urp_GetRedirectsForPortal]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC sp_executesql @statement = N'-- =============================================
+-- Author:		Bruce Chapman
+-- Create date: 27 Sep 2012
+-- Description:	Returns set of Redirect Entries
+-- =============================================
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}urp_GetRedirectsForPortal] 
+	@portalId int = 0
+
+AS
+BEGIN
+	SET NOCOUNT ON
+
+    select RedirectId
+		, r.PortalId
+		, RedirectOrder
+		, HttpAlias
+		, RedirectUrl
+		, MatchType
+		, KeepQueryString
+		, t.TabPath as DestTabPath
+		, Coalesce(t.TabId, -1) as DestTabId
+		, DestUrl
+		, DestType
+		, IsRegex
+    From {databaseOwner}{objectQualifier}urp_Redirect r
+    left join {databaseOwner}{objectQualifier}vw_Tabs t
+     on (r.DestTabPath = t.TabPath or t.TabId = r.DestTabId)
+     and t.PortalId = @portalId
+    order by RedirectOrder ASC
+    
+END
+' 
+END
+GO

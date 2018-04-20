@@ -1,0 +1,68 @@
+﻿/************************************************************/
+/*****              SQLDataProvider		                *****/
+/*****   Social Groups Extension Url Provider 1.00.00	*****/
+/*****                                                  *****/
+/***** Note: To manually execute this script you must   *****/
+/*****       perform a search and replace operation     *****/
+/*****       for  and {objectQualifier}	*****/
+/************************************************************/
+/****** Object:  StoredProcedure {databaseOwner}[{objectQualifier}soc_GetSocialUrls]    Script Date: 06/01/2012 14:17:28 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}soc_GetSocialUrls]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC sp_executesql @statement = N'
+Create PROCEDURE {databaseOwner}[{objectQualifier}soc_GetSocialUrls]
+	@portalId int
+AS
+BEGIN
+/* -------------------------------------------
+	GetSocialUrls :
+	Returns all urls for social groups
+   ------------------------------------------- */
+
+	select r.RoleId as ItemId, -1 as ParentId, ''Group'' as ItemType,  RoleName as UrlFragment1, r.[Description] as UrlFragment2
+	from {databaseOwner}{objectQualifier}roles r
+	inner join {databaseOwner}{objectQualifier}roleSettings rs
+	 on r.RoleId = rs.RoleId
+	 and rs.SettingName = ''URL''
+	where r.PortalId = @portalId
+	
+	  
+END' 
+END
+GO
+/****** Object:  StoredProcedure {databaseOwner}[{objectQualifier}soc_GetSocialUrl]    Script Date: 06/01/2012 14:17:28 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}soc_GetSocialUrl]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC sp_executesql @statement = N'
+Create PROCEDURE {databaseOwner}[{objectQualifier}soc_GetSocialUrl]
+	@portalId int, @itemId int , @itemType nvarchar(20)
+AS
+BEGIN
+/* -------------------------------------------
+	GetSocialUrl :
+	Returns single url for social group
+   ------------------------------------------- */
+
+	if (@itemType = ''group'')
+	begin
+		select r.RoleId as ItemId, -1 as ParentId, ''Group'' as ItemType,  RoleName as UrlFragment1, r.[Description] as UrlFragment2
+		from {databaseOwner}{objectQualifier}roles r
+		inner join {databaseOwner}{objectQualifier}roleSettings rs
+		 on r.RoleId = rs.RoleId
+		 and rs.SettingName = ''URL''
+		where r.PortalId = @portalId
+		  and r.RoleId = @itemId
+	end	
+	
+	  
+END' 
+END
+GO

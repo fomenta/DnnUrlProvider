@@ -1,0 +1,13 @@
+﻿This source code is designed to be installed directly into the DesktopModules folder of a DNN site for development.
+
+To use the source code:
+1) Obtain and install the DNN_SocialUrlProvider_xx.xx.xx_Install.zip file into a DNN 7.1 or later site
+2) Verify the installation is working
+3) Copy this source code into the /DesktopModules/DNN_SocialUrlProvider folder
+4) Open from this location in Visual Studio
+5) Code, debug, enjoy!
+6) If you want to repacakge, simply build the project in Release compilation.  A new install package will be created in the /Install folder.
+
+NOTE : If you decide not to open the source code in a DNN website folder, you'll need a \bin directory in the ..\..\bin location relative to this project folder.
+
+See 

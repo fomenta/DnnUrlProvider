@@ -1,0 +1,91 @@
+﻿<dotnetnuke type="Package" version="5.0">
+  <packages>
+    <package name="DNN.UrlRedirectProvider" type="Module" version="01.02.00">
+      <friendlyName>DNN Url Redirect Provider</friendlyName>
+      <description>The DNN Url Redirect Provider module allows for custom redirects to be used in a DotNetNuke install.</description>
+      <owner>
+        <name></name>
+        <organization>DNN Corp</organization>
+        <url><![CDATA[<a href="http://dnnurlproviders.codeplex.com" target="_new">DNN Url Providers Codeplex Project</a>]]></url>
+        <email><![CDATA[Click here to raise issues or bugs, or to join the project<a href="http://dnnurlproviders.codeplex.com/workitem/list/basic" target="_new"> via the issues and discussion pages</a>]]></email>
+      </owner>
+      <license src="EULA.html" />
+      <releaseNotes >
+        <![CDATA[
+            <p style="font-weight:bolder">Version 01.02.00 - May 11th, 2016</p>
+            <ul>
+                <li>Changed solution structure to use NuGet reference assemblies</li>
+                <li>Resolved caching issue that prevented caching from working</li>
+                <li>Resolved issue with cross-portal sharing of URL redirects</li>
+            </ul>
+            
+            <p style="font-weight:bolder">Version 01.01.02 -  19 March 2015</p>
+            <p>The DNN Url Redirect module allows the redirect of any Url to any other Url in a DNN site</p>
+            <p>
+              <ul>
+              <li>Add extra caching at data level to increase caching level and performance</li>
+              <li>Add pre-emptive checks for redirect validation</li>
+              <li>Fix issue with registering the provider correctly</li>
+              </ul>
+              Note that running the url provider for redirects only, where the redirect is not for an existing DNN page (ie, the path of the URL doesn't match to a DNN page for the portal), the redirects will
+              not work unless using at least DNN 7.3.0.  This relates to a bug in the DNN URL Rewriting code which returns a 404 before the redirects are checked.  This can be worked around by creating a DNN page
+              which matches the path of the redirect, or by upgrading to DNN 7.3 or later.
+            </p>
+            
+          ]]>
+      </releaseNotes>
+      <dependencies>
+        <!-- uncomment and change for dependency on your module being installed -->
+          <dependency type="CoreVersion">07.01.00</dependency>
+      </dependencies>
+      <azureCompatible>true</azureCompatible>
+      <components>
+        <component type="Script">
+          <scripts>
+            <basePath>DesktopModules\DNN_UrlRedirectProvider\SqlDataProvider</basePath>
+            <script type="Install">
+              <name>01.00.00.SqlDataProvider</name>
+              <version>01.00.00</version>
+            </script>
+            <script type="Install">
+              <name>01.02.00.SqlDataProvider</name>
+              <version>01.02.00</version>
+            </script>
+            <script type="Uninstall">
+              <name>Uninstall.SqlDataProvider</name>
+              <version>01.00.00</version>
+            </script>
+          </scripts>
+        </component>
+        <component type="UrlProvider">
+          <urlProvider>
+            <name>DNN Url Redirect Extension Provider</name>
+            <type>DNN.Modules.UrlRedirectProvider.UrlRedirectProvider</type>
+            <settingsControlSrc>DesktopModules/DNN_UrlRedirectProvider/Settings.ascx</settingsControlSrc>
+            <redirectAllUrls>true</redirectAllUrls>
+            <replaceAllUrls>false</replaceAllUrls>
+            <rewriteAllUrls>false</rewriteAllUrls>
+            <desktopModule></desktopModule>
+          </urlProvider>
+        </component>        
+        <component type="Assembly">
+          <assemblies>
+            <assembly>
+              <path>bin</path>
+              <name>DNN.UrlRedirectProvider.dll</name>
+              <sourceFileName>DNN.UrlRedirectProvider.dll</sourceFileName>
+            </assembly>
+          </assemblies>
+        </component>
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules\DNN_UrlRedirectProvider</basePath>
+            <resourceFile>
+              <name>DNN.UrlRedirectProvider_Resources.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+      </components>
+    </package>
+  </packages>
+</dotnetnuke>

@@ -1,0 +1,68 @@
+<dotnetnuke type="Package" version="5.0">
+  <packages>
+    <package name="DNN.SocialUrlProvider" type="Module" version="01.00.01">
+      <friendlyName>DNN Social Url Extension Provider</friendlyName>
+      <description>Creates friendly Urls for DNN Platform Social features</description>
+      <iconFile>Images/icon_extensions.gif</iconFile>
+      <owner>
+        <name>DNN</name>
+        <organization>DNN Corp</organization>
+        <url>http://www.dnnsoftware.com</url>
+        <email></email>
+      </owner>
+      <license src="License.txt"></license>
+      <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
+      <dependencies>
+        <dependency type="CoreVersion">07.01.00</dependency>
+      </dependencies>
+      <azureCompatible>true</azureCompatible>
+      <components>
+        <component type="Script">
+          <scripts>
+            <basePath>DesktopModules\DNN_SocialUrlProvider</basePath>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>01.00.00.SqlDataProvider</name>
+              <version>01.00.00</version>
+            </script>
+            <script type="UnInstall">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>Uninstall.SqlDataProvider</name>
+              <version>01.00.00</version>
+            </script>
+          </scripts>
+        </component>
+
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/DNN_SocialUrlProvider</basePath>
+            <resourceFile>
+              <name>Resources.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+
+        <component type="UrlProvider">
+          <urlProvider>
+            <name>DNN Social Url Extension Provider</name>
+            <type>DotNetNuke.Modules.SocialUrlProvider.SocialUrlProvider</type>
+            <settingsControlSrc>DesktopModules/DNN_SocialUrlProvider/Settings.ascx</settingsControlSrc>
+            <redirectAllUrls>false</redirectAllUrls>
+            <replaceAllUrls>false</replaceAllUrls>
+            <rewriteAllUrls>false</rewriteAllUrls>
+            <desktopModule>Social Groups</desktopModule>
+          </urlProvider>
+        </component>
+
+        <component type="Assembly">
+          <assemblies>
+            <basePath>bin</basePath>
+            <assembly>
+              <name>DNN.SocialUrlProvider.dll</name>
+            </assembly>
+          </assemblies>
+        </component>
+      </components>
+    </package>
+  </packages>
+</dotnetnuke>

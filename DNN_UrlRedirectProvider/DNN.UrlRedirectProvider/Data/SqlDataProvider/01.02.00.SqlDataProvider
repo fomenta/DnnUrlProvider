@@ -1,0 +1,27 @@
+﻿ALTER PROCEDURE {databaseOwner}[{objectQualifier}urp_GetRedirectsForPortal] 
+	@portalId int = 0
+
+AS
+SET NOCOUNT ON
+
+SELECT
+	 RedirectId
+	, r.PortalId
+	, RedirectOrder
+	, HttpAlias
+	, RedirectUrl
+	, MatchType
+	, KeepQueryString
+	, t.TabPath as DestTabPath
+	, Coalesce(t.TabId, -1) as DestTabId
+	, DestUrl
+	, DestType
+	, IsRegex
+FROM {databaseOwner}{objectQualifier}urp_Redirect r
+LEFT OUTER JOIN {databaseOwner}{objectQualifier}vw_Tabs t
+    ON (r.DestTabPath = t.TabPath OR t.TabId = r.DestTabId)
+		AND t.PortalId = @portalId
+WHERE R.PortalId = @portalId
+ORDER BY RedirectOrder ASC
+    
+GO

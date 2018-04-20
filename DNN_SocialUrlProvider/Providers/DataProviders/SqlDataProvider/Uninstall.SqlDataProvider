@@ -1,0 +1,16 @@
+﻿/************************************************************/
+/*****              SQLDataProvider		                *****/
+/*****  Social Url Extension Provider	 1.00.00		*****/
+/*****                                                  *****/
+/***** Note: To manually execute this script you must   *****/
+/*****       perform a search and replace operation     *****/
+/*****       for  and {objectQualifier}	*****/
+/************************************************************/
+/****** Object:  StoredProcedure {databaseOwner}[{objectQualifier}soc_GetSocialUrl]    Script Date: 06/01/2012 14:17:28 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}soc_GetSocialUrl]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}soc_GetSocialUrl]
+GO
+/****** Object:  StoredProcedure {databaseOwner}[{objectQualifier}soc_GetSocialUrls]    Script Date: 06/01/2012 14:17:28 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}soc_GetSocialUrls]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}soc_GetSocialUrls]
+GO

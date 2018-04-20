@@ -1,0 +1,22 @@
+﻿/************************************************************/
+/*****              SQLDataProvider		                *****/
+/*****			DNN Url Redirect Provider 1.00.00		*****/
+/*****                                                  *****/
+/***** Note: To manually execute this script you must   *****/
+/*****       perform a search and replace operation     *****/
+/*****       for  and {objectQualifier}	*****/
+/************************************************************/
+/****** Object:  StoredProcedure {databaseOwner}[{objectQualifier}urp_GetRedirectsForPortal]    Script Date: 09/27/2012 20:50:40 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}urp_GetRedirectsForPortal]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}urp_GetRedirectsForPortal]
+GO
+
+/****** Object:  Table {databaseOwner}[{objectQualifier}urp_Redirect]    Script Date: 09/27/2012 20:50:34 ******/
+IF  EXISTS (SELECT * FROM {databaseOwner}sysobjects WHERE id = OBJECT_ID(N'[DF_{objectQualifier}urp_Redirect_RedirectId]') AND type = 'D')
+BEGIN
+ALTER TABLE {databaseOwner}[{objectQualifier}urp_Redirect] DROP CONSTRAINT [DF_{objectQualifier}urp_Redirect_RedirectId]
+END
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}urp_Redirect]') AND type in (N'U'))
+DROP TABLE {databaseOwner}[{objectQualifier}urp_Redirect]
+GO
